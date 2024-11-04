@@ -1,0 +1,132 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+    Contact Us - Ecommerce
+{% endblock title %}
+
+{% block content %}
+               
+<div class="contact-section py-5 bg-light pt-4">
+    <div class="container pt-4">
+        <div class="row pt-4">
+            <!-- Store Information Section -->
+            {% if messages %}
+                <div class="alert alert-success" role="alert" id="successMessage">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="col-md-5 pt-4">
+                
+                <h2 class="mb-4">Get in Touch</h2>
+                <p class="text-muted">Reach out to us for any inquiries or assistance. We're happy to help!</p>
+                <div class="store-info">
+                    <div class="info-item d-flex align-items-start mb-4">
+                        <i class="fas fa-map-marker-alt fa-2x text-success me-3"></i>
+                        <div>
+                            <h5>Our Store</h5>
+                            <p class="mb-0">58 A, East Madison Street,<br>Baltimore, MD, USA 4508</p>
+                        </div>
+                    </div>
+                    <div class="info-item d-flex align-items-start mb-4">
+                        <i class="fas fa-phone fa-2x text-success me-3"></i>
+                        <div>
+                            <h5>Call Us</h5>
+                            <p class="mb-0">+91 800-2345-6799<br>+91 800-2345-6788</p>
+                        </div>
+                    </div>
+                    <div class="info-item d-flex align-items-start mb-4">
+                        <i class="fas fa-envelope fa-2x text-success me-3"></i>
+                        <div>
+                            <h5>Email Us</h5>
+                            <p class="mb-0">support@ecommerce.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Contact Form Section -->
+            <div class="col-md-7 pt-4">
+                <h2 class="mb-4">Send Us a Message</h2>
+                <form method="POST" action="{% url 'contact_us' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="id_name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Your Email</label>
+                        <input type="email" class="form-control" id="id_email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_message" class="form-label">Message</label>
+                        <textarea class="form-control" id="id_message" name="message" rows="4" placeholder="Write your message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg w-100">Send Message</button>
+                </form>
+            </div>
+            
+
+        <!-- Google Map Section -->
+        <div class="row mt-5">
+            <div class="col">
+                <h2 class="text-center mb-4">Our Location</h2>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.722883620188!2d-74.01004848459491!3d40.71015117933106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a3164e9b333%3A0x8f89c4c1be5e0d35!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1644574587549!5m2!1sen!2sin"
+                    width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS for Contact Page -->
+<style>
+    .contact-section {
+        padding: 60px 0;
+    }
+
+    .store-info .info-item i {
+        margin-right: 15px;
+    }
+
+    .info-item h5 {
+        font-weight: 600;
+    }
+
+    .info-item p {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .contact-section h2 {
+        font-weight: 700;
+        color: #333;
+    }
+
+    .contact-section .form-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .contact-section button {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .contact-section .bg-light {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<script>
+    // Automatically hide the success message after 3 seconds (3000 milliseconds)
+    setTimeout(function() {
+        var successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+    }, 3000);
+    </script>
+
+{% endblock content %}

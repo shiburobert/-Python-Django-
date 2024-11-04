@@ -1,0 +1,79 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+    Collections | ShopKart
+{% endblock title %}
+
+{% block content %}
+
+<section class="bg-light py-4 pt-4">
+    <div class="container pt-4">
+        <div class="row pt-4">
+            <div class="col-12 pt-4">
+                <h4 class="mb-3 pt-4">Cart Items</h4>
+                <hr class="my-3" style="border-color:#b8bfc2">
+                {% include 'shop/inc/message.html' %}
+            </div>
+
+            {% if cart %}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Unit</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                    <tr>
+                        <td><img src="{{ item.product.product_image.url }}" height="75px" alt="{{ item.product.name }}"></td>
+                        <td>{{ item.product.name }}</td>
+                        <td>Rs. {{ item.product.selling_price|stringformat:'d' }}</td>
+                        <td>{{ item.product_qty }}</td>
+                        <td class="amt">Rs. {{ item.total_cost|stringformat:'d' }}</td>
+                        <td>
+                            <a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure you want to remove this item?')" class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash"></i> Remove
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3"></td>
+                        <td><b>Total Amount</b></td>
+                        <td id="net">Rs. 0</td>
+                        <td>
+                            <a href="{% url 'check' %}" class="btn btn-success btn-sm">
+                                <i class="fa fa-credit-card"></i> Checkout
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
+            <p>Your cart is empty.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+<script>
+    // Ensure the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const nodes = document.querySelectorAll('.amt');
+        const arr = Array.from(nodes);
+        let res = arr.reduce((acc, curr) => {
+            // Extract the number from the text and add it to the accumulator
+            return acc += parseFloat(curr.textContent.replace('Rs. ', '').replace(',', '').trim());
+        }, 0);
+        // Update the total amount in the DOM
+        document.getElementById("net").innerHTML = "Rs. " + res.toFixed(2);
+    });
+</script>
+
+{% endblock content %}

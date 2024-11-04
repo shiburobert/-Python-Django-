@@ -1,0 +1,142 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+    Flipkart
+{% endblock title %}
+
+{% block content %}
+<section class="bg-light py-4 my-5">
+    <div class="container pt-4">
+        <div class="row pt-4">
+            <div class="col-12">
+                <h4 class="mb-3">{{ category_name }} Products</h4>
+                <hr style="border-color:#b8bfc2;">
+                {% include 'shop/inc/message.html' %}
+            </div>
+            {% for item in products %}
+        <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+            <div class="card product-card border-0 rounded shadow-sm">
+                <div class="position-relative">
+                    <img src="{{ item.product_image.url }}" class="card-img-top" alt="{{ item.name }}">
+                    <!-- Optionally display popular and discount badges -->
+                    <!-- {% if item.is_popular %}
+                    <span class="badge badge-popular">🔥 Popular</span>
+                    {% endif %}
+                    {% if item.discount %}
+                    <span class="badge badge-discount">{{ item.discount }}% OFF</span>
+                    {% endif %} -->
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">
+                        <span class="old_price"><s>Rs.{{ item.original_price | stringformat:'d' }}</s></span>
+                        <span class="new_price">Rs.{{ item.selling_price | stringformat:'d' }}</span>
+                    </p>
+                    <a href="{% url 'product_details' item.Catagory.name item.name %}" class="btn btn-outline-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Elegant CSS Styling -->
+<style>
+    /* Overall Page Styling */
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+    }
+
+    h2 {
+        font-weight: 600;
+        color: #495057;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    /* Card Styling */
+    .product-card {
+        background: #ffffff;
+        border-radius: 12px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        overflow: hidden;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Image Styling - Ensures full visibility and scales for medium-sized windows */
+    .card-img-top {
+        width: 100%;           /* Full width */
+        height: 200px;          /* Set a fixed height for the image container */
+        object-fit: contain;    /* Ensures the entire image fits without cropping */
+        transition: transform 0.3s;
+    }
+
+    .product-card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    /* Adjusting height for smaller screens */
+    @media (max-width: 768px) {
+        .card-img-top {
+            height: 180px;    /* Slightly smaller height for tablets and medium screens */
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-img-top {
+            height: 150px;    /* Smaller height for very small screens */
+        }
+    }
+
+    /* Badge Styling */
+    .badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        color: #ffffff;
+        border-radius: 5px;
+    }
+
+    .badge-popular {
+        background-color: #ff5733; /* Custom color for popular badge */
+    }
+
+    .badge-discount {
+        background-color: #28a745; /* Custom color for discount badge */
+    }
+
+    /* Price Styling */
+    .old_price {
+        font-weight: bold;
+        color: #999;
+        margin-right: 10px;
+    }
+
+    .new_price {
+        font-weight: bold;
+        color: #dc3545;
+        font-size: 1.2rem;
+    }
+
+    /* Button Styling */
+    .btn-outline-primary {
+        color: #007bff;
+        border: 2px solid #007bff;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+</style>
+
+{% endblock content %}
